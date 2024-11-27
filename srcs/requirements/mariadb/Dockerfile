@@ -7,7 +7,7 @@ RUN apt-get update -y && apt-get upgrade -y && \
 COPY ./tools/init.sql /sql-initialization.d/
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
 
-RUN chmod +x /database-initialization.d/init.sql
+RUN chmod +x /sql-initialization.d/init.sql
 
 RUN chmod 644 /etc/mysql/mariadb.conf.d/50-server.cnf && \
     chown root:root /etc/mysql/mariadb.conf.d/50-server.cnf

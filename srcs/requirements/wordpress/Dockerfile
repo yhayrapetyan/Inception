@@ -25,6 +25,12 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 
 COPY ./conf/www.conf /etc/php/${PHP_VERSION}/fpm/pool.d/
 
+RUN mkdir -p /var/www/html
+WORKDIR /var/www/html
+
+RUN chmod -R 755 /var/www/html && \
+    chown -R www-data:www-data /var/www/html
+
 COPY ./tools/run_wordpress.sh /
 RUN chmod +x /run_wordpress.sh
 
