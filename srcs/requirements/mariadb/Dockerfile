@@ -17,6 +17,4 @@ RUN mkdir -p /var/run/mysqld
 
 WORKDIR /sql-initialization.d/
 
-EXPOSE 3306
-
 CMD ["mysqld"]

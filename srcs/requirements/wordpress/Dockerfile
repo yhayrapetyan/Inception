@@ -1,6 +1,6 @@
 FROM debian:bookworm-slim
 
-ENV PHP_VERSION 8.2
+ENV PHP_VERSION=8.2
 
 RUN mkdir -p /run/php
 

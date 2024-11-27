@@ -7,7 +7,7 @@ services:
     volumes:
       - db_volume:/var/lib/mysql/
     networks:
-      - db_network
+      - inception
     env_file:
       - .env
     restart: on-failure
@@ -20,7 +20,9 @@ services:
     volumes:
       - wp_volume:/var/www/html/
     networks:
-      - db_network
+      - inception
+    expose:
+      - 3306
     env_file:
       - .env
     restart: on-failure
@@ -33,10 +35,9 @@ services:
     volumes:
       - wp_volume:/var/www/html/
     networks:
-      - db_network
+      - inception
     ports:
       - "443:443"
-      - "80:80"
     env_file:
       - .env
     restart: on-failure
@@ -56,5 +57,5 @@ volumes:
       type: none
 
 networks:
-  db_network:
+  inception:
     driver: bridge
