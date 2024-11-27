@@ -17,6 +17,7 @@ services:
     build: ./requirements/wordpress/
     depends_on:
       - mariadb
+      - redis
     volumes:
       - wp_volume:/var/www/html/
     networks:
@@ -38,6 +39,15 @@ services:
       - inception
     ports:
       - "443:443"
+    env_file:
+      - .env
+    restart: on-failure
+
+  redis:
+    container_name: redis
+    build: ./requirements/redis/
+    networks:
+      - inception
     env_file:
       - .env
     restart: on-failure
