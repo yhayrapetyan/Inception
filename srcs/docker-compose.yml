@@ -25,21 +25,21 @@ services:
       - .env
     restart: on-failure
 
-#  nginx:
-#    container_name: nginx
-#    build: ./requirements/nginx
-##    depends_on:
-##      - wordpress
-##    volumes:
-##      - wp_volume:/var/www/html/
-#    networks:
-#      - db_network
-#    ports:
-#      - "443:443"
-#      - "80:80"
-#    env_file:
-#      - .env
-#    restart: always
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx
+    depends_on:
+      - wordpress
+    volumes:
+      - wp_volume:/var/www/html/
+    networks:
+      - db_network
+    ports:
+      - "443:443"
+      - "80:80"
+    env_file:
+      - .env
+    restart: on-failure
 
 volumes:
   wp_volume:

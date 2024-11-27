@@ -1,7 +1,7 @@
 server {
     listen      443 ssl;
     server_name $USERNAME.42.fr www.$USERNAME.42.fr;
-    root    /var/www/;
+    root    /var/www/html;
     index index.php;
     
     ssl_certificate    $SSL_CRT;
