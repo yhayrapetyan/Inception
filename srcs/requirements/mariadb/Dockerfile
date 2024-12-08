@@ -4,17 +4,16 @@ RUN apt-get update -y && apt-get upgrade -y && \
     apt-get install -y mariadb-server mariadb-client && \
     rm -rf /var/lib/apt/lists/*
 
-COPY ./tools/init.sql /sql-initialization.d/
+COPY tools/run_mariadb.sh /sql-initialization.d/
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
-
-RUN chmod +x /sql-initialization.d/init.sql
 
 RUN chmod 644 /etc/mysql/mariadb.conf.d/50-server.cnf && \
     chown root:root /etc/mysql/mariadb.conf.d/50-server.cnf
 
-#if I remove this line mariadb container will write mariadb exited with code 0 but it don't actualy exit
-RUN mkdir -p /var/run/mysqld
+RUN chmod +x /sql-initialization.d/run_mariadb.sh
 
 WORKDIR /sql-initialization.d/
 
-CMD ["mysqld"]
+EXPOSE 3306
+
+CMD ["./run_mariadb.sh"]
