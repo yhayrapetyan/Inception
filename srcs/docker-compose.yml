@@ -8,31 +8,44 @@ services:
       - db_volume:/var/lib/mysql/
     networks:
       - inception
+    expose:
+      - 3306
     env_file:
       - .env
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     restart: on-failure
 
   wordpress:
     container_name: wordpress
     build: ./requirements/wordpress/
     depends_on:
-      - mariadb
-      - redis
+      mariadb:
+        condition: service_healthy
+      redis:
+          condition: service_healthy
     volumes:
       - wp_volume:/var/www/html/
     networks:
       - inception
-    expose:
-      - 3306
     env_file:
       - .env
+    healthcheck:
+      test: [ "CMD", "wp", "db", "check", "--allow-root" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
     restart: on-failure
 
   nginx:
     container_name: nginx
     build: ./requirements/nginx
     depends_on:
-      - wordpress
+      wordpress:
+        condition: service_healthy
     volumes:
       - wp_volume:/var/www/html/
     networks:
@@ -50,6 +63,11 @@ services:
       - inception
     env_file:
       - .env
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     restart: on-failure
 
   adminer:
@@ -92,6 +110,14 @@ services:
       - "21100-21110:21100-21110"
     restart: on-failure
 
+#  mailhog:
+#    container_name: mailhog
+#    build: ./requirements/mailhog/
+#    ports:
+#      - "1025:1025"
+#      - "8025:8025"
+#    restart: on-failure
+
 volumes:
   wp_volume:
     driver: local
@@ -99,6 +125,7 @@ volumes:
       device: /home/${USER}/data/wordpress
       o: bind
       type: none
+
   db_volume:
     driver: local
     driver_opts:

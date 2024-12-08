@@ -5,7 +5,9 @@ ENV PHP_VERSION=8.2
 RUN mkdir -p /run/php
 
 RUN	apt-get update -y && apt-get upgrade -y
-RUN apt-get install -y \
+
+RUN apt-get install -y mariadb-client && \
+    apt-get install -y \
 	curl \
 	wget \
 	php${PHP_VERSION} \
