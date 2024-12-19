@@ -6,8 +6,6 @@ RUN apt-get install -y redis && rm -rf /var/lib/apt/lists/*
 COPY ./tools/run_redis.sh /
 RUN chmod +x /run_redis.sh
 
-#RUN echo 'vm.overcommit_memory = 1' >> /etc/sysctl.conf
-
 WORKDIR /etc/redis/
 
 EXPOSE 6379

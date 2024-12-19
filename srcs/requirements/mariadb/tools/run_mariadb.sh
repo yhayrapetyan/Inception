@@ -1,7 +1,5 @@
 #!/bin/bash
 
-mkdir -p /var/run/mysqld
-
 service mysql start
 
 echo "CREATE DATABASE IF NOT EXISTS $MYSQL_DB ;" > db.sql
@@ -10,6 +8,10 @@ echo "GRANT ALL PRIVILEGES ON $MYSQL_DB.* TO '$MYSQL_USER'@'%' ;" >> db.sql
 echo "FLUSH PRIVILEGES;" >> db.sql
 
 mysql < db.sql
+
+rm db.sql
+
+sleep 2
 
 kill $(cat /var/run/mysqld/mysqld.pid)
 

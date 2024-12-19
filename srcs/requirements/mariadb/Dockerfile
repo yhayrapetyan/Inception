@@ -12,6 +12,8 @@ RUN chmod 644 /etc/mysql/mariadb.conf.d/50-server.cnf && \
 
 RUN chmod +x /sql-initialization.d/run_mariadb.sh
 
+RUN mkdir -p /var/run/mysqld
+
 WORKDIR /sql-initialization.d/
 
 EXPOSE 3306

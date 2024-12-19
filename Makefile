@@ -99,5 +99,7 @@ remove_all: hard_down remove_volumes
     		echo "No images to delete."; \
 	fi
 
+re: remove_all up
+
 info:
 	docker system df
