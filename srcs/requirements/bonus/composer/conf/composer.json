@@ -1,0 +1,8 @@
+{
+	"description": "WordPress project with Composer autoloading",
+	"autoload": {
+	  "psr-4": {
+		"App\\": "app/"
+	  }
+	}
+  }

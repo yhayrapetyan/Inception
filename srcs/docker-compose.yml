@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   mariadb:
     container_name: mariadb
@@ -107,6 +105,18 @@ services:
     ports:
       - "21:21"
       - "21100-21110:21100-21110"
+    restart: on-failure
+
+  composer:
+    container_name: composer
+    build: ./requirements/bonus/composer/
+    depends_on:
+      wordpress:
+        condition: service_healthy
+    volumes:
+      - wp_volume:/var/www/html
+    networks:
+      - inception
     restart: on-failure
 
 
