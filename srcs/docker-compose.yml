@@ -6,8 +6,6 @@ services:
       - db_volume:/var/lib/mysql/
     networks:
       - inception
-    # expose:
-    #   - 3306
     env_file:
       - .env
     healthcheck:
@@ -107,16 +105,14 @@ services:
       - "21100-21110:21100-21110"
     restart: on-failure
 
-  composer:
-    container_name: composer
-    build: ./requirements/bonus/composer/
-    depends_on:
-      wordpress:
-        condition: service_healthy
-    volumes:
-      - wp_volume:/var/www/html
-    networks:
-      - inception
+  netdata:
+    build: ./requirements/bonus/netdata
+    ports:
+      - "19999:19999"
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
     restart: on-failure
 
 

@@ -34,11 +34,12 @@ if ! wp db query "SHOW TABLES LIKE 'wp_users';" --allow-root | grep -q "wp_users
 
       # Install and configure Redis plugin
       wp plugin install redis-cache --activate --allow-root
-      wp config set WP_REDIS_HOST $REDIS_HOSTNAME --allow-root
-      wp config set WP_REDIS_PORT $REDIS_PORT --raw --allow-root
-      wp config set WP_CACHE_KEY_SALT $DOMAIN_NAME --allow-root
-      wp config set WP_REDIS_PASSWORD $REDIS_PASSWORD --allow-root
-      wp config set WP_REDIS_CLIENT phpredis --allow-root
+      wp config set WP_REDIS_HOST $REDIS_HOSTNAME --allow-root > /dev/null
+      wp config set WP_REDIS_PORT $REDIS_PORT --raw --allow-root > /dev/null
+      wp config set WP_CACHE_KEY_SALT $DOMAIN_NAME --allow-root > /dev/null
+      wp config set WP_REDIS_PASSWORD $REDIS_PASSWORD --allow-root > /dev/null
+      wp config set WP_REDIS_CLIENT phpredis --allow-root > /dev/null
+	  echo "\033[32mRedis configured successfully\033[0m"
 else
       echo "\033[32mWordPress tables already exist. Skipping installation.\033[0m"
 fi
