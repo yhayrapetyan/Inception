@@ -1,4 +1,14 @@
-FROM python:3.11-slim
+FROM debian:buster
+
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends \
+    python3 \
+    python3-pip \
+    python3-venv \
+    curl \
+    && apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /home/app
 
@@ -9,4 +19,4 @@ COPY /tools/server.py .
 
 EXPOSE 8000
 
-CMD ["python", "server.py"]
+CMD ["python3", "server.py"]

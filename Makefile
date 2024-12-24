@@ -24,13 +24,13 @@ build:
 	@echo "$(yellow)======= Images build successfully =======$(reset)"
 	@echo "$(yellow)=========================================$(reset)"
 
-up: configure_volumes build
+up: create_volumes build
 	@echo "$(green)==================================$(reset)"
 	@echo "$(green)======= Lifting containers =======$(reset)"
 	@echo "$(green)==================================$(reset)"
 	@${DOCKER_COMPOSE} -f ${COMPOSE_PATH} up
 
-up_background: configure_volumes build
+up_background: create_volumes build
 	@echo "$(green)==================================$(reset)"
 	@echo "$(green)======= Lifting containers =======$(reset)"
 	@echo "$(green)==================================$(reset)"
@@ -77,7 +77,7 @@ stop:
 	@echo "$(red)======= Containers stopped =======$(reset)"
 	@echo "$(red)==================================$(reset)"
 
-configure_volumes:
+create_volumes:
 	@echo "$(green)Creating directories for volumes$(reset)"
 	@mkdir -p /home/$(USERNAME)/data
 	@mkdir -p /home/$(USERNAME)/data/mariadb
@@ -103,3 +103,5 @@ re: remove_all up
 
 info:
 	docker system df
+
+.PHONY: all build up up_background down hard_down start stop create_volumes remove_volumes remove_all re info
